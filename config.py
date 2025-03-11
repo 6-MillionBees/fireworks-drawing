@@ -2,7 +2,7 @@
 # Insert date here
 # Insert title here
 
-from pygame import Rect
+from pygame import Rect, event
 
 # Screen size constants
 WIDTH = 500
@@ -17,9 +17,12 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
 RED = (255, 0, 0)
-BLUE = (0, 255, 0)
-GREEN = (0, 0, 255)
+YELLOW = (255, 183, 0)
+GREEN = (0, 255, 0)
+MIKU = (0, 255, 208)
+BLUE = (0, 0, 255)
 
+CALL_FIREWORK = event.custom_type()
 
 FOREGROUND_RECTS = [
   Rect(0, 292, 44, 208),

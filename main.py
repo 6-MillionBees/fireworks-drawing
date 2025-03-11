@@ -3,17 +3,13 @@
 # Fireworks Drawing
 
 import pygame
-import config
+import config as c
+import firework as fire
+
+from random import randint
+
 pygame.init()
 
-
-# Event handling
-def main_events():
-  for event in pygame.event.get():
-    # Quits the game when you press the x
-    if event.type == pygame.QUIT:
-      return False
-  return True
 
 
 
@@ -21,25 +17,36 @@ def main_events():
 def main():
 
   # Setting up the window
-  screen = pygame.display.set_mode((config.WIDTH, config.HEIGHT))
+  screen = pygame.display.set_mode((c.WIDTH, c.HEIGHT))
   pygame.display.set_caption("PLACEHOLDER")
+
+  # Delta Time
+  dt = 0
+
+  # Firework Group
+  fireworks = pygame.sprite.Group()
 
   # Setting up the clock
   clock = pygame.time.Clock()
+  pygame.time.set_timer(c.CALL_FIREWORK, randint(500, 2000))
 
   # The bool for the main loop
   running = True
 
-  # A few misc things
-  # overlay = pygame.Surface()
-
   while running:
 
     # Call events / update running
-    running = main_events()
+    for event in pygame.event.get():
+      # Quits the game when you press the x
+      if event.type == pygame.QUIT:
+        return
+      if event.type == c.CALL_FIREWORK:
+        pygame.time.set_timer(c.CALL_FIREWORK, randint(500, 2000))
+        fire.Firework
+
 
     # Fills window
-    screen.fill(config.WHITE)
+    screen.fill(c.WHITE)
 
     draw_foreground(screen)
 
@@ -47,15 +54,16 @@ def main():
     pygame.display.flip()
 
     # Limits the framerate
-    clock.tick(config.FPS)
+    dt = clock.tick(c.FPS) / 1000
 
   # Close the pygame modules
   pygame.quit()
 
 
+
 def draw_foreground(surface):
-  for rect in config.FOREGROUND_RECTS:
-    pygame.draw.rect(surface, config.BLACK, rect)
+  for rect in c.FOREGROUND_RECTS:
+    pygame.draw.rect(surface, c.BLACK, rect)
 
 def draw_background(surface):
   cloud = pygame.Surface(100, 70)
