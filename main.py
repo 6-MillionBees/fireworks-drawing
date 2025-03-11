@@ -6,7 +6,7 @@ import pygame
 import config as c
 import firework as fire
 
-from random import randint
+from random import randint, choice
 
 pygame.init()
 
@@ -42,13 +42,19 @@ def main():
         return
       if event.type == c.CALL_FIREWORK:
         pygame.time.set_timer(c.CALL_FIREWORK, randint(500, 2000))
-        fire.Firework
+        fire.Firework(fireworks, [randint(0, c.WIDTH), c.HEIGHT], randint(650, 900), c.RED_FIREWORK)
 
+    fireworks.update(dt)
 
     # Fills window
-    screen.fill(c.WHITE)
+    screen.fill(c.BLACK)
 
-    draw_foreground(screen)
+    for firework in fireworks:
+      firework.draw(screen)
+
+    print(len(fireworks.sprites()))
+
+    # draw_foreground(screen)
 
     # Updates the Display
     pygame.display.flip()

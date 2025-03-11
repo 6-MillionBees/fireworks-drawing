@@ -3,6 +3,10 @@
 # Insert title here
 
 from pygame import Rect, event
+from pygame.math import Vector2
+from random import randint
+import math
+
 
 # Screen size constants
 WIDTH = 500
@@ -17,12 +21,16 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
 RED = (255, 0, 0)
+ORANGE = (255, 60, 0)
 YELLOW = (255, 183, 0)
 GREEN = (0, 255, 0)
 MIKU = (0, 255, 208)
 BLUE = (0, 0, 255)
 
 CALL_FIREWORK = event.custom_type()
+
+RED_FIREWORK = [RED, ORANGE, YELLOW]
+# GREEN_FIREWORK = []
 
 FOREGROUND_RECTS = [
   Rect(0, 292, 44, 208),
@@ -37,3 +45,9 @@ FOREGROUND_RECTS = [
   Rect(418, 247, 42, 253),
   Rect(460, 316, 40, 184),
 ]
+
+def rand_vector():
+  angle = math.radians(randint(0, 360))
+  x = math.cos(angle)
+  y = math.sin(angle)
+  return Vector2(x, y).normalize()
