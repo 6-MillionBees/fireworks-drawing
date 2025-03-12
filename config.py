@@ -19,6 +19,8 @@ FPS = 60
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
+ALLMOST_WHITE = (245, 245, 245)
+ALLMOST_BLACK = (10, 10, 10)
 
 RED = (255, 0, 0)
 ORANGE = (255, 60, 0)
@@ -45,6 +47,16 @@ FOREGROUND_RECTS = [
   Rect(418, 247, 42, 253),
   Rect(460, 316, 40, 184),
 ]
+
+DETAIL_RECTS = [
+  Rect(8, 300, 8, 8),
+  Rect(19, 340, 8, 8),
+  Rect(78, 342, 8, 8),
+  Rect(50, 264, 8, 8),
+  Rect(95, 405, 8, 8),
+  Rect(173, 316, 8, 8)
+]
+
 
 def rand_vector():
   angle = math.radians(randint(0, 360))

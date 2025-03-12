@@ -28,7 +28,7 @@ def main():
 
   # Setting up the clock
   clock = pygame.time.Clock()
-  pygame.time.set_timer(c.CALL_FIREWORK, randint(500, 2000))
+  pygame.time.set_timer(c.CALL_FIREWORK, randint(200, 1000))
 
   # The bool for the main loop
   running = True
@@ -41,20 +41,20 @@ def main():
       if event.type == pygame.QUIT:
         return
       if event.type == c.CALL_FIREWORK:
-        pygame.time.set_timer(c.CALL_FIREWORK, randint(500, 2000))
-        fire.Firework(fireworks, [randint(0, c.WIDTH), c.HEIGHT], randint(650, 900), c.RED_FIREWORK)
+        pygame.time.set_timer(c.CALL_FIREWORK, randint(200, 1000))
+        fire.Firework(fireworks, [randint(0, c.WIDTH), c.HEIGHT], randint(750, 900), c.RED_FIREWORK)
 
     fireworks.update(dt)
 
     # Fills window
-    screen.fill(c.BLACK)
+    screen.fill(c.ALLMOST_BLACK)
 
     for firework in fireworks:
       firework.draw(screen)
 
     print(len(fireworks.sprites()))
 
-    # draw_foreground(screen)
+    draw_foreground(screen)
 
     # Updates the Display
     pygame.display.flip()
@@ -71,8 +71,6 @@ def draw_foreground(surface):
   for rect in c.FOREGROUND_RECTS:
     pygame.draw.rect(surface, c.BLACK, rect)
 
-def draw_background(surface):
-  cloud = pygame.Surface(100, 70)
 
 
 # Calls the code
