@@ -24,7 +24,7 @@ ALLMOST_BLACK = (10, 10, 10)
 
 RED = (255, 0, 0)
 ORANGE = (255, 60, 0)
-YELLOW = (255, 183, 0)
+YELLOW = (255, 255, 0)
 GREEN = (0, 255, 0)
 MIKU = (0, 255, 208)
 BLUE = (0, 0, 255)
@@ -56,6 +56,7 @@ DETAIL_RECTS = [
   Rect(95, 405, 8, 8),
   Rect(173, 316, 8, 8)
 ]
+
 
 
 def rand_vector():

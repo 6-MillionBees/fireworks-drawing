@@ -42,7 +42,10 @@ def main():
         return
       if event.type == c.CALL_FIREWORK:
         pygame.time.set_timer(c.CALL_FIREWORK, randint(200, 1000))
-        fire.Firework(fireworks, [randint(0, c.WIDTH), c.HEIGHT], randint(750, 900), c.RED_FIREWORK)
+        if randint(0, 10):
+          fire.Firework(fireworks, [randint(0, c.WIDTH), c.HEIGHT], randint(750, 900), c.RED_FIREWORK)
+        else:
+          fire.Miku_Work(fireworks, [randint(0, c.WIDTH), c.HEIGHT], randint(750, 900))
 
     fireworks.update(dt)
 

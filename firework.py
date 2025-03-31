@@ -19,6 +19,8 @@ class Firework(pg.sprite.Sprite):
     self.main_part = particle(self.particles, self.pos, choice(colors), pg.math.Vector2(0, -1), self.speed, 1000, (10, 10))
     self.exploded = False
     self.trail_timer = randint(100, 200)
+    self.main_color = self.colors[0]
+    self.light = 0
 
   def explode(self):
     self.exploded = True
@@ -29,10 +31,11 @@ class Firework(pg.sprite.Sprite):
         self.pos.copy(),
         choice(self.colors),
         c.rand_vector(),
-        randint(20, 100),
+        randint(2, 100),
         0,
         fade = 200
       )
+    self.light = 255000
 
   def update(self, dt):
     self.pos = self.main_part.pos.copy()
@@ -41,6 +44,7 @@ class Firework(pg.sprite.Sprite):
     self.check_speed()
     self.check_particles()
     self.particles.update(dt)
+    self.light -= 200000 * dt
 
 
   def update_trail(self, dt):
@@ -58,11 +62,19 @@ class Firework(pg.sprite.Sprite):
       if not self.exploded:
         self.explode()
 
-  def draw(self, surface):
+  def draw(self, surface: pg.Surface):
     for part in self.particles:
       part.draw(surface)
     for part in self.trail:
       part.draw(surface)
+    # try:
+    for x in range(int(self.light / 1000 / 2)):
+      temp_surf = pg.Surface((x * 2, x * 2))
+      temp_surf.set_colorkey(c.BLACK)
+      temp_surf.set_alpha(2)
+      temp_rect = temp_surf.get_rect(center = self.pos)
+      pg.draw.circle(temp_surf, self.main_color, (x, x), x)
+      surface.blit(temp_surf, temp_rect)
 
 
 class particle(pg.sprite.Sprite):
@@ -100,9 +112,9 @@ class particle(pg.sprite.Sprite):
     if self.speed <= 10:
       self.speed = 0
       self.falloff = 0
-      # self.lifespan -= dt * 1000
-      # if self.lifespan <= 0:
-      #   self.kill()
+      self.lifespan -= dt * 1000
+      if self.lifespan <= 0:
+        self.kill()
 
   def check_alpha(self):
     if self.alpha <= 0:
@@ -115,3 +127,41 @@ class particle(pg.sprite.Sprite):
 
   def draw(self, surface):
     surface.blit(self.image, self.rect)
+
+
+
+class Miku_Work(Firework):
+  def __init__(self, groups, pos, speed):
+    self.colors = [c.MIKU]
+    super().__init__(groups, pos, speed, self.colors)
+    self.miku = pg.image.load("miku.png")
+
+  def explode(self):
+    self.exploded = True
+    self.main_part.kill()
+    Miku_Part(self.particles, self.pos, c.RED, pg.math.Vector2(1, 1), 0, 0, fade = 200)
+    self.light = 255000
+
+
+class Miku_Part(particle):
+  def __init__(self, groups, pos, color, direction, speed, falloff, size=(2, 2), fade=0) -> None:
+    super().__init__(groups, pos, color, direction, speed, falloff, size, fade)
+    self.miku = pg.image.load("miku.png")
+
+  def check_speed(self, dt):
+    pass
+
+  def update(self, dt):
+    super().update(dt)
+    self.expand(dt)
+
+  def expand(self, dt):
+    self.size = [x + 100 * dt for x in self.size]
+    self.miku = pg.image.load("miku.png")
+    self.miku = pg.transform.scale(self.miku, self.size)
+
+  def draw(self, surface):
+    self.miku.set_alpha(self.alpha)
+
+    temp_rect = self.miku.get_rect(center = self.pos)
+    surface.blit(self.miku, temp_rect)
