@@ -50,17 +50,20 @@ class Firework(pg.sprite.Sprite):
   def update_trail(self, dt):
     self.trail.update(dt)
     if self.t0 + self.trail_timer <= pg.time.get_ticks() and not self.exploded:
-      self.trail_timer += randint(10, 50)
-      particle(self.trail, self.pos, choice(self.colors), c.rand_vector(), 10, 0, fade= 700)
+      self.trail_timer += 30
+      particle(self.trail, self.pos, choice(self.colors), pg.math.Vector2(0, 0), 0, 0, fade= 700)
+
 
   def check_particles(self):
     if len(self.particles.sprites()) == 0:
       self.kill()
 
+
   def check_speed(self):
     if self.main_part.speed <= 0:
       if not self.exploded:
         self.explode()
+
 
   def draw(self, surface: pg.Surface):
     for part in self.particles:
@@ -68,10 +71,10 @@ class Firework(pg.sprite.Sprite):
     for part in self.trail:
       part.draw(surface)
     # try:
-    for x in range(int(self.light / 1000 / 2)):
+    for x in range(1, int(self.light / 1000 / 2), 2):
       temp_surf = pg.Surface((x * 2, x * 2))
       temp_surf.set_colorkey(c.BLACK)
-      temp_surf.set_alpha(2)
+      temp_surf.set_alpha(3)
       temp_rect = temp_surf.get_rect(center = self.pos)
       pg.draw.circle(temp_surf, self.main_color, (x, x), x)
       surface.blit(temp_surf, temp_rect)

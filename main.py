@@ -55,7 +55,6 @@ def main():
     for firework in fireworks:
       firework.draw(screen)
 
-    print(len(fireworks.sprites()))
 
     draw_foreground(screen)
 
